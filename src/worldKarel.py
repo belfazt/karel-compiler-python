@@ -1,0 +1,474 @@
+from gui import *
+import time
+import copy
+import sys
+
+worldFile = open('world.txt', 'r')
+rows = int()
+columns = int()
+world = list()
+karelCount = 0
+karelList = list()
+mainKarel=False
+
+global flagNoErrors 
+flagNoErrors= True
+
+def getSize():
+	'''
+	    This method reads from the world.txt file the dimensions of the world
+	'''
+	global rows, columns
+	rows = int(worldFile.readline())
+	print rows
+	columns = int(worldFile.readline())
+	print columns
+
+
+def createWorld():
+	'''
+	    This method reads from the world.txt all the data of the world in order
+	    to import it to the program
+	'''
+	global columns, rows, world, karelCount, mainKarel
+	getSize()
+	world = [[list() for x in range(columns)] for x in range(rows)]
+	#worldFile.read(1)
+	for i,line in enumerate(worldFile):
+		for j,c in enumerate(line):
+			if 'l' in c or 'r' in c or 'u' in c or 'd' in c:
+				if not mainKarel:
+					mainKarel=True
+					#self, id, index, idF, colF, rowF, facingF
+					karelInit = Karel(0, 0, -1, j, i, c)
+					karelList.append(karelInit)
+					karelCount+=1
+					world[i][j].append(karelInit)
+				else:
+					print "More than one Karel declared, just one instance is accepted"
+					sys.exit()
+			elif c.isdigit():
+				for x in range(int(c)):
+					world[i][j].append("B")	
+			elif not c == "\n":
+				world[i][j].append(c)
+
+def move(karel):
+	'''
+	    Moves Karel one step ahead on the world to the
+	    direction where it is facing
+	'''
+	#checar que no se salga del mundo
+	global world, flagNoErrors
+	if checkFrontIsClear(karel):
+		if karel.facing == "left":
+			if karel.col==0:
+				flagNoErrors=False
+				print "Invalid operation"
+			else:
+				print "move left"
+				world[karel.row][karel.col-1].append(karel)
+				world[karel.row][karel.col].remove(karel) 
+				karel.setPosition(karel.col-1, karel.row)
+		elif karel.facing == "right":
+			if karel.col==columns-1:
+				flagNoErrors=False
+				print "Invalid operation"
+			else:
+				print "move right"
+				world[karel.row][karel.col+1].append(karel)
+				world[karel.row][karel.col].remove(karel)
+				karel.setPosition(karel.col+1, karel.row)
+		elif karel.facing == "up":
+			if karel.row==0:
+				flagNoErrors=False
+				print "Invalid operation"
+			else:
+				print "move up"
+				world[karel.row-1][karel.col].append(karel)
+				world[karel.row][karel.col].remove(karel)
+				karel.setPosition(karel.col, karel.row-1)
+		else:
+			if karel.row==rows-1:
+				flagNoErrors=False
+				print "Invalid operation"
+			else:
+				print "move down"
+				world[karel.row+1][karel.col].append(karel)
+				world[karel.row][karel.col].remove(karel)
+				karel.setPosition(karel.col, karel.row+1)
+	else:
+		flagNoErrors = False
+
+def turnleft(karel):
+	'''
+	    Change Karel instance to face to its left
+	'''
+	if karel.facing == "left":
+		karel.setFacing("down")
+		print "I'm looking down"
+	elif karel.facing == "right":
+		karel.setFacing("up")
+		print "I'm looking up"
+	elif karel.facing == "up":
+		karel.setFacing("left")
+		print "I'm looking left"
+	else:
+		karel.setFacing("right")
+		print "I'm looking right"
+
+def pickbeeper(karel):
+	'''
+	    This method checks if there is a beeper on the position where the receive instance
+	    of Karel is place it. If the beeper exist Karel will pick it up otherwise the method will send an error
+	'''
+	global flagNoErrors
+	if "B" in world[karel.row][karel.col]:
+		world[karel.row][karel.col].remove("B")
+		karel.pickBeeper()
+		print "Picked a beeper"
+	else:
+		print "Error at picking beeper!"
+		flagNoErrors = False
+
+def putbeeper(karel):
+	'''
+	    This method checks if Karel has a beeper, if it is the case Karel receive instance puts the beeper in its 
+	    current position elsewhere the method will send an error
+	'''
+	global flagNoErrors
+	if karel.beepers > 0:
+		karel.dropBeeper()
+		world[karel.row][karel.col].append("B")
+		print "Put beeper down"
+	else:
+		print "I don't have a beeper to leave :("
+		flagNoErrors = False
+
+
+def checkFrontIsClear(karel):
+	'''
+	    This method returns False if Karel is facing a wall 
+	    or a none world position True otherwise.
+	'''
+	if karel.facing == "left":
+		if karel.col==0:
+			return False
+		else:
+			content = world[karel.row][karel.col-1]
+	elif karel.facing == "right":
+		if karel.col==columns-1:
+			return False
+		else:
+			content = world[karel.row][karel.col+1]
+	elif karel.facing == "up":
+		if karel.row==0:
+			return False
+		else:
+			content = world[karel.row-1][karel.col]
+	else:
+		if karel.row==rows-1:
+			return False
+		else:
+			content = world[karel.row+1][karel.col]
+	if "x" in content:
+		return False
+	else:
+		return True
+
+def checkFrontIsBlocked(karel):
+	'''
+	    This method returns True if Karel is facing a wall 
+	    or a none world position False otherwise. 
+	'''
+	return not checkFrontIsClear(karel)
+
+def checkLeftIsClear(karel):
+	'''
+	    This method Checks the left position of Karel's facing and
+	    returns False if Karel is facing a wall 
+	    or a none world position True otherwise.
+	'''
+	content = ""
+	if karel.facing == "left":
+		if karel.row==rows-1:
+			return False
+		else:
+			content = world[karel.row+1][karel.col]
+	elif karel.facing == "right":
+		if karel.row==0:
+			return False
+		else:
+			content = world[karel.row-1][karel.col]
+	elif karel.facing == "up":
+		if karel.col==0:
+			return False
+		else:
+			content = world[karel.row][karel.col-1]
+	else:
+		if karel.col==columns-1:
+			return False
+		else:
+			content = world[karel.row][karel.col+1]
+	if "x" in content:
+		return False
+	else:
+		return True
+
+def checkLeftIsBlocked(karel):
+	'''
+	    This method checks the left position of Karel's facing and
+	    returns True if Karel is facing a wall 
+	    or a none world position False otherwise.
+	'''
+	return not checkLeftIsClear(karel)
+
+def checkRightIsClear(karel):
+	'''
+	    This method checks the right position of Karel's facing and
+	    returns False if Karel is facing a wall 
+	    or a none world position True otherwise.
+	'''
+	print "check right"
+	if karel.facing == "left":
+		if karel.row==0:
+			return False
+		else:
+			content = world[karel.row-1][karel.col]
+	elif karel.facing == "right":
+		if karel.row==rows-1:
+			return False
+		else:
+			content = world[karel.row+1][karel.col]
+	elif karel.facing == "up":
+		if karel.col==columns-1:
+			return False
+		else:
+			content = world[karel.row][karel.col+1]
+	else:
+		if karel.col==0:
+			return False
+		else:
+			content = world[karel.row][karel.col-1]
+	if "x" in content:
+		return False
+	else:
+		return True
+
+def checkRightIsBlocked(karel):
+	'''
+	    This method checks the right position of Karel's facing and
+	    returns True if Karel is facing a wall 
+	    or a none world position False otherwise.
+	'''
+	print "check right blocked"
+	return not checkRightIsClear(karel)
+
+def checkNextToBeeper(karel):
+	'''
+	    This method returns True if there is a beeper on the immediate intersections False otherwise 
+	'''
+	if "B" in world[karel.row][karel.col]:
+		return True
+	else:
+		return False
+	#if "B" in world[karel.row+1][karel.col] or "B" in world[karel.row-1][karel.col] or "B" in world[karel.row][karel.col-1] or "B" in world[karel.row][karel.col+1]:
+	#	return True
+	#else:
+	#	return False
+
+def checkNotNextToBeeper(karel):
+	'''
+	    This method returns False if there is a beeper on the immediate intersections True otherwise 
+	'''
+	return not checkNextToBeeper(karel)
+
+def checkAnyBeepers(karel):
+	'''
+	    This method returns True if Karel instance has at least one beeper False otherwise 
+	'''
+	if karel.beepers > 0:
+		return True
+	else:
+		return False
+
+def checkNotAnyBeepers(karel):
+	'''
+	    This method returns True if Karel instance does not has any beeper False otherwise 
+	'''
+	return not checkAnyBeepers(karel)
+
+def checkFacingNorth(karel):
+	'''
+	    This method returns True if Karel instance is facing to North False otherwise 
+	'''
+	if karel.facing == "up":
+		return True
+	else:
+		return False
+def checkNotFacingNorth(karel):
+	'''
+	    This method returns True if Karel instance is not facing to North False otherwise 
+	'''
+	return not checkFacingNorth(karel)
+
+def checkFacingSouth(karel):
+	'''
+	    This method returns True if Karel instance is facing to South False otherwise 
+	'''
+	if karel.facing == "down":
+		return True
+	else:
+		return False
+def checkNotFacingSouth(karel):
+	'''
+	    This method returns True if Karel instance is not facing to North False otherwise 
+	'''
+	return not checkFacingSouth(karel)
+
+def checkFacingEast(karel):
+	'''
+	    This method returns True if Karel instance is facing to East False otherwise 
+	'''
+	if karel.facing == "right":
+		return True
+	else:
+		return False
+
+def checkNotFacingEast(karel):
+	'''
+	    This method returns True if Karel instance is not facing to North False otherwise 
+	'''
+	return not checkFacingEast(karel)
+
+def checkFacingWest(karel):
+	'''
+	    This method returns True if Karel instance is facing to West False otherwise 
+	'''
+	if karel.facing == "left":
+		return True
+	else:
+		return False
+
+def checkNotFacingWest(karel):
+	'''
+	    This method returns True if Karel instance is not facing to West False otherwise 
+	'''
+	return not checkFacingWest(karel)
+
+def printWorld():
+	'''
+	    This method draws the world to the graphic user interface 
+	'''
+	global world, columns, rows
+	copyWorld = copy.deepcopy(world)
+	
+	for row in copyWorld:
+		for val in row:
+			if any(isinstance(x, worldKarel.Karel) for x in val):
+				for w in range(len(val)):
+					if isinstance(val[w],worldKarel.Karel):
+						val[w] = val[w].name
+
+	for row in copyWorld:
+		for val in row:
+			print '{:2}'.format(val),
+		print 
+    
+	repaint(world)
+	time.sleep(0.1)
+
+def finalWorld():
+	'''
+		This method prints the final instance of the world
+	'''
+	global world
+	paintFinalWorld(world)
+
+def dropBeepers(karel):
+	'''
+	    Drops all the beeper that the Karel instance has on its current position
+	'''
+	print "Drop beepers"
+	for x in range(karel.beepers):
+		world[karel.row][karel.col].append("B")
+    
+
+def killSons(karel):
+	'''
+	    This method kills all the sons of Karel instance
+	'''
+	print "drop sons"
+	for son in karelList:
+		if son.idF==karel.id:
+			son.kill()
+
+def leaveWorld(karel):
+	'''
+	    This methos removes Karel instance's body of the world
+	'''
+	print "Leaving World"
+	karelList.remove(karel)
+	world[karel.row][karel.col].remove(karel)
+
+
+class Karel:
+	'''
+	    This class defines Karel's object:
+	    Karel has the following attributes
+	        -id
+	        -A list of beepers
+	        -An index that indicates what  
+	        -position (composed by column and row)
+	        -A facing attribute that defines where is the Karel point of view
+	        -An alive attribute that indicates if Karel is or not 
+	        -Karel Stack which saves position old the interCodeArray after a call to a function 
+	'''
+	def __init__(self, id, index, idF, colF, rowF, facingF):
+		self.callStack = list()
+		self.iterateStack = list()
+		self.beepers = 0
+		self.alive = True
+		self.id = id
+		self.name="K" + str(self.id)
+		self.index = index
+		self.idF = idF
+		self.col = colF
+		self.row = rowF
+		self.facing=self.setInitFacing(facingF)
+
+	def pickBeeper(self):
+	    self.beepers+=1
+
+	def dropBeeper(self):
+	    self.beepers-=1
+
+	def kill(self):
+	    self.alive = False
+	    leaveWorld(self)
+	    dropBeepers(self)
+	    killSons(self)
+
+	def addIndex(self):
+	    self.index+=1
+
+	def setPosition(self, col, row):
+	    self.row = row
+	    self.col =col
+
+	def setFacing(self, facing):
+	    self.facing = facing
+
+	def setInitFacing(self, c):
+		if c == 'l' or c == "left":
+			return "left"
+		elif c == 'r' or c == "right":
+			return "right"
+		elif c == 'u' or c == "up":
+			return "up"
+		else:
+			return "down"
+
+	def __str__(self):
+	    print self.id
+
