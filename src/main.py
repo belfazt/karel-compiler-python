@@ -3,9 +3,11 @@ import meta_rd_karel
 from rec_desc_karel import *
 from lexicographical import *
 
-__builtin__.aTokensInput=start(getNext())
+tokens = start(getNext())
+__builtin__.aTokensInput = tokens[0]
+__builtin__.tokenLines = tokens[1]
 
-__builtin__.currentToken=0
+__builtin__.currentToken = 0
 
 '''
     This is the file that executes all the program, all the magic begins by executing the lexicographical component that return

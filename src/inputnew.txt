@@ -12,15 +12,16 @@ class program{
                 move()
                 turnoff()
         }
-        program(){
+        program(){ 
                 move()
                 move()
                 clone(son())
                 move()
                 turnright()
                 move()
-                move()
-                pickbeeper()
+                if(anyBeepersInBeeperBag){
+                        turnleft()
+                }
                 move()
                 move()
                 move()

@@ -11,9 +11,10 @@ inp = open('inputnew.txt','r')
 out = open('output.txt', 'w')
 tokens_dic = {'(': 'PA', ')': 'PC', '{': 'LLA', '}': 'LLC','!':'NOT','0':'CAD','1':'NUM', '&&':'AND', '||':'OR'}
 symbol_table = list()
-line= 1
-tokens=list()
-syntaxError=False
+line = 1
+tokens = list()
+lines = list()
+syntaxError = False
 
 
 def getNext():
@@ -31,24 +32,20 @@ def isValidChar(ch):
         "{" or "}"  or "!"
         Return True if a valid charachter is read False otherwise  
     '''
-    if '(' in ch or ')' in ch or '{' in ch or '}' in ch or '!' in ch:
-        return True
-    else:
-        return False
+    return '(' in ch or ')' in ch or '{' in ch or '}' in ch or '!' in ch
 
 def insertToken(buff):
     '''
-        Appends to the symbol table the receive buffer
+        Appends to the symbol table the received buffer
     '''
     if buff.isalpha():
-        symbol_table.append([tokens_dic.get('0'),buff,line])
+        symbol_table.append([tokens_dic.get('0'), buff, line])
     elif buff.isdigit():
-        symbol_table.append([tokens_dic.get('1'),buff,line])
+        symbol_table.append([tokens_dic.get('1'), buff, line])
+    elif tokens_dic.get(buff):
+        symbol_table.append([tokens_dic.get(buff), buff, line])
     else:
-        if tokens_dic.get(buff):
-            symbol_table.append([tokens_dic.get(buff),buff,line])
-        else:
-            symbol_table.append(['ERR',buff,line])
+        symbol_table.append(['ERR',buff,line])
 
 def addOne():
     '''
@@ -68,6 +65,7 @@ def double(ch, buff, special):
         buff += ch
         ch =getNext()
         tokens.append(buff)
+        lines.append(line)
         out.write(buff + '\n')
         insertToken(buff)
         buff = ""
@@ -76,25 +74,26 @@ def double(ch, buff, special):
         buff = ""
         start(ch)
 
-def ifError(x):
+def ifError(symbol):
     '''
         This method checks if there passed list contains an ERR statement
     '''
     global syntaxError
-    if x[0]=="ERR":
+    if symbol[0]=="ERR":
         syntaxError=True
-        print "Syntax error: symbol:", x[1], " detected on line", x[2]
+        print "Syntax error: symbol:", symbol[1], " detected on line", symbol[2]
+        sys.exit(1)
 
 def checkErrors():
     '''
         Check if the symbol_table contains any error and throws an error message
     '''
-    map(ifError,symbol_table)
+    map(ifError, symbol_table)
 
 def start(ch):
     '''
         This method is the main loop of the progrmas reads character by character
-        and classify them in ordet to get the valid tokkens an add the to the symbol table
+        and classify them in ordet to get the valid tokens an add the to the symbol table
     '''
     if ch:
         buff = ""
@@ -102,6 +101,7 @@ def start(ch):
             buff += ch
             ch=getNext()
             tokens.append(buff)
+            lines.append(line)
             out.write(buff + '\n')
             insertToken(buff)
             buff = ""
@@ -114,6 +114,7 @@ def start(ch):
                   buff += ch
                   ch = getNext()
             tokens.append(buff)
+            lines.append(line)
             out.write(buff + '\n')
             insertToken(buff)
             buff = ""
@@ -125,6 +126,7 @@ def start(ch):
                 buff += ch  
                 ch=getNext()
             tokens.append(buff)
+            lines.append(line)
             out.write(buff + '\n')
             insertToken(buff)
             buff = ""
@@ -151,4 +153,4 @@ def start(ch):
         checkErrors()
         if(syntaxError):
             sys.exit()
-    return tokens
+    return [tokens, lines]

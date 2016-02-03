@@ -1,21 +1,20 @@
 import sys
 
-aErrorTable=dict()
-aErrorTable={1:'Falta llave izquierda',
-             2:'Falta parentesis derecho',
-             3:'Falta llave derecha',
-             4:'Error en palabra reservada',
-             5:'Falta parentesis izquierda',
-             6:'Funcion no definida'}
+aErrorTable={1:'Falta llave izquierda, %s',
+             2:'Falta parentesis derecho, %s',
+             3:'Falta llave derecha, %s',
+             4:'Error en palabra reservada, %s',
+             5:'Falta parentesis izquierda, %s',
+             6:'Funcion no definida, %s'}
 
-def showErrorMessage(indexMessage):
+def showErrorMessage(message, line=None):
     '''
        This method receives an index an returns a message if the index
        does not belongs to the Error Table
     '''
-    if (indexMessage<=len(aErrorTable) and indexMessage>0):
-        print aErrorTable[indexMessage]
+    if message in aErrorTable:
+        print aErrorTable[message] % str(line)
     else:
-        print "The code error was not found"
-    sys.exit(0)
+        print "The error code was not found"
+    sys.exit(1)
 

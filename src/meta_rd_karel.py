@@ -31,7 +31,7 @@ NOT = "NOT"
 ITE = "ITE"
 CLONE = "CLONE"
 
-SymbolTable=dict()
+SymbolTable = dict()
 
 def printAtokensInput():
     '''
@@ -90,7 +90,14 @@ def exigir(tokenRequerido):
     currentToken+=1
     return result
 
-def leer(tokenRequerido):
+def getLine():
+    '''
+        Returns the line where the token is written
+    '''
+    global currentToken
+    return tokenLines[currentToken] - 1
+
+def leer(tokenRequerido, inc=0):
     '''
         This method returns True if the receive token is the same as the current token
         False otherwise.
@@ -101,6 +108,7 @@ def leer(tokenRequerido):
         result=True
     else:
         result=False
+    currentToken+=inc
     return result
 
 def findStartPointOfFunction(nameFunction):

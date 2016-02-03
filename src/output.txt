@@ -1,5 +1,6 @@
 class
-program
+pro
+gram
 {
 void
 turnright
@@ -65,12 +66,15 @@ turnright
 move
 (
 )
-move
+if
+(
+anyBeepersInBeeperBag
+)
+{
+turnleft
 (
 )
-pickbeeper
-(
-)
+}
 move
 (
 )

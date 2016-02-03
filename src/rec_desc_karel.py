@@ -14,7 +14,7 @@ def program():
     '''
     global InterCode
     global InterCodeIndex
-    if exigir("class"):        
+    if exigir("class"):
         if  exigir("program"):
             if exigir("{"):
                 InterCode.append(JMP)
@@ -23,11 +23,11 @@ def program():
                 functions()
                 main_function()
                 if not exigir("}"):  
-                    showErrorMessage( 3 )
+                    showErrorMessage(3, getLine())
         else: 
-            showErrorMessage( 4 )
+            showErrorMessage(4, getLine())
     else: 
-        showErrorMessage( 4 )
+        showErrorMessage(4, getLine())
     intercodeFile=open("intercodeFile.txt",'w')
     intercodeFile.write(str(InterCode))
     #for x in InterCode:
@@ -65,15 +65,15 @@ def main_function():
                     InterCode[1] = InterCodeIndex
                     body()
                     if not exigir("}"):
-                        showErrorMessage( 3 )
+                        showErrorMessage(3, getLine())
                 else: 
-                    showErrorMessage( 1 )
+                    showErrorMessage(1, getLine())
             else:
-                showErrorMessage( 2 )
+                showErrorMessage(2, getLine())
         else:
-            showErrorMessage( 5 )
+            showErrorMessage(5, getLine())
     else: 
-        showErrorMessage( 4 )
+        showErrorMessage(4, getLine())
 
 #<function> := "void" <name function> "()" "{" <body> "}"
 def function():
@@ -89,16 +89,16 @@ def function():
                 if exigir("{"):
                     body()
                     if not exigir("}"):
-                        showErrorMessage( 3 )
+                        showErrorMessage(3, getLine())
                     InterCode.append(RET)
 #                   InterCode[ InterCodeIndex ] = RET
                     InterCodeIndex += 1
                 else:
-                    showErrorMessage( 1 )
+                    showErrorMessage(1, getLine())
             else:
-                showErrorMessage( 2 )  
+                showErrorMessage(2, getLine())  
         else:
-            showErrorMessage( 5 )
+            showErrorMessage(5, getLine())
     else:
         print ""
         #error de sintaxis, fin de ejecucion
@@ -109,7 +109,7 @@ def name_function():
         Validates this grammar: <name function> ::= <string without spaces>
     '''
     global InterCodeIndex
-    nameFunction = string_without_spaces( )
+    nameFunction = string_without_spaces()
     AddNewFunction( nameFunction, InterCodeIndex )
 
 
@@ -219,9 +219,9 @@ def official_function():
             InterCodeIndex+=1         
     if exigir("("):
         if not exigir(")"):
-            showErrorMessage( 2 )
+            showErrorMessage(2, getLine())
     else:
-        showErrorMessage( 5 )
+        showErrorMessage(5, getLine())
 
 #<customer function> ::= <string without spaces>
 def customer_function():
@@ -241,14 +241,14 @@ def customer_function():
 #       InterCode[ InterCodeIndex ] = PosFunctionInCodeInter
         InterCodeIndex += 1
     else: 
-        showErrorMessage(6)
+        showErrorMessage(6, getLine())
     if exigir("("):
         if not exigir(")"):
             print "customer"
-            showErrorMessage( 2 )
+            showErrorMessage(2, getLine())
     else:
         print "Customer"
-        showErrorMessage( 5 )
+        showErrorMessage(5, getLine())
 
 #<if expression> ::= "if" ( <conditional> ) "{" <body> "}" [ <elseif> ]
 def if_expression():
@@ -279,13 +279,13 @@ def if_expression():
                         else:
                             InterCode[ PosX_jmptrue ] = InterCodeIndex
                     else:
-                        showErrorMessage(3)
+                        showErrorMessage(3, getLine())
                 else:
-                    showErrorMessage(1)
+                    showErrorMessage(1, getLine())
             else:
-                showErrorMessage(2)
+                showErrorMessage(2, getLine())
         else:
-            showErrorMessage(5)
+            showErrorMessage(5, getLine())
     else:
         print ""
         #error de sintaxis, fin de ejecucion
@@ -309,12 +309,12 @@ def elseif(PosX_jmptrue ):
         if exigir("{"):
             body()
             if not exigir("}"):
-                showErrorMessage(3)
+                showErrorMessage(3, getLine())
             InterCode[ PosY_jmpfalse ] = InterCodeIndex
         else:
-            showErrorMessage(1)
+            showErrorMessage(1, getLine())
     else:
-        showErrorMessage(4)
+        showErrorMessage(4, getLine())
 
 
 #<while expression> ::= "while" "(" <conditional> ")" "{" <body> "}"
@@ -341,7 +341,7 @@ def while_expression():
                 if exigir("{"):
                     body()
                     if not exigir("}"):
-                        showErrorMessage(3)
+                        showErrorMessage(3, getLine())
                         #error de sintaxis, fin de ejecucion
                     InterCode.append(JMP)
                     InterCodeIndex += 1
@@ -349,16 +349,16 @@ def while_expression():
                     InterCodeIndex += 1
                     InterCode[ PosX_jmptrue ] = InterCodeIndex
                 else:
-                    showErrorMessage(1)
+                    showErrorMessage(1, getLine())
                     #error de sintaxis, fin de ejecucion   
             else:
-                showErrorMessage(2)
+                showErrorMessage(2, getLine())
                 #error de sintaxis, fin de ejecucion
         else:
-          showErrorMessage(5)
+          showErrorMessage(5, getLine())
           #error de sintaxis, fin de ejecucion
     else:
-        showErrorMessage(4)
+        showErrorMessage(4, getLine())
 
 
 #<iterate expression> ::= "iterate" "(" <number> ")" "{" <body> "}"
@@ -383,19 +383,19 @@ def iterate_expression():
                         setCurrentTokenMod(start)
                         body()
                     if not exigir("}"):
-                        showErrorMessage(3)
+                        showErrorMessage(3, getLine())
                         #error de sintaxis, fin de ejecucion
                 else:
-                    showErrorMessage(1)
+                    showErrorMessage(1, getLine())
                     #error de sintaxis, fin de ejecucion 
             else:
-                showErrorMessage(2)
+                showErrorMessage(2, getLine())
                 #error de sintaxis, fin de ejecucion
         else:
-            showErrorMessage(5)
+            showErrorMessage(5, getLine())
             #error de sintaxis, fin de ejecucion
     else:
-        showErrorMessage(4)
+        showErrorMessage(4, getLine())
         
 
 
@@ -536,7 +536,7 @@ def simple_condition():
         InterCode.append(NOT_FACING_WEST)        
         InterCodeIndex += 1
     else:
-        showErrorMessage(0)
+        showErrorMessage(0, getLine())
     
 def composed_condition(jumps):
     '''
@@ -547,7 +547,7 @@ def composed_condition(jumps):
     elif leer("&&"):
         and_condition(jumps)
     else:
-        showErrorMessage(0)
+        showErrorMessage(0, getLine())
 
 
 def or_condition(jumps):
@@ -613,6 +613,6 @@ def clone():
             InterCodeIndex+=1
             customer_function()
             if not exigir(")"):
-                showErrorMessage( 2 )
+                showErrorMessage(2, getLine())
         else:
-            showErrorMessage( 5 )
+            showErrorMessage(5, getLine())
