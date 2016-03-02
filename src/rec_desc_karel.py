@@ -437,6 +437,13 @@ def conditional():
 #  | "notFacingSouth"
 #  | "notFacingEast"
 #  | "notFacingWest"
+#  | "frontIsFull"
+#  | "frontIsNotFull"
+#  | "amIAlone"
+#  | "amINotAlone"
+#  | "isFather"
+#  | "isSon"
+#  | "isDescendant"
 
 def simple_condition():
     '''
@@ -459,7 +466,14 @@ def simple_condition():
                                     | "notFacingNorth"
                                     | "notFacingSouth"
                                     | "notFacingEast"
-                                    | "notFacingWest" 
+                                    | "notFacingWest"
+                                    | "frontIsFull"
+                                    | "frontIsNotFull"
+                                    | "amIAlone"
+                                    | "amINotAlone"
+                                    | "isFather"
+                                    | "isSon"
+                                    | "isDescendant" 
     '''
     global Intercode
     global InterCodeIndex
@@ -529,11 +543,39 @@ def simple_condition():
         InterCodeIndex += 1
     elif leer("notFacingEast"):
         exigir("notFacingEast")
-        InterCode.append(NOT_FACING_EAST)        
+        InterCode.append(NOT_FACING_EAST)
         InterCodeIndex += 1
     elif leer("notFacingWest"):
         exigir("notFacingWest")
-        InterCode.append(NOT_FACING_WEST)        
+        InterCode.append(NOT_FACING_WEST)
+        InterCodeIndex += 1
+    elif leer("frontIsFull"):
+        exigir("frontIsFull")
+        InterCode.append(FRONT_IS_FULL)
+        InterCodeIndex += 1
+    elif leer("frontIsNotFull"):
+        exigir("frontIsNotFull")
+        InterCode.append(FRONT_IS_NOT_FULL)
+        InterCodeIndex += 1
+    elif leer("amIAlone"):
+        exigir("amIAlone")
+        InterCode.append(AM_I_ALONE)
+        InterCodeIndex += 1
+    elif leer("amINotAlone"):
+        exigir("amINotAlone")
+        InterCode.append(AM_I_NOT_ALONE)
+        InterCodeIndex += 1
+    elif leer("isFather"):
+        exigir("isFather")
+        InterCode.append(IS_FATHER)
+        InterCodeIndex += 1
+    elif leer("isSon"):
+        exigir("isSon")
+        InterCode.append(IS_SON)
+        InterCodeIndex += 1
+    elif leer("isDescendant"):
+        exigir("isDescendant")
+        InterCode.append(IS_DESCENDANT)
         InterCodeIndex += 1
     else:
         showErrorMessage(0, getLine())

@@ -179,7 +179,17 @@ def conditionalsKarel(karel, interCodeArray):
         return checkNotFacingEast(karel)
     elif interCodeArray[karel.index] == NOT_FACING_WEST:
         return checkNotFacingWest(karel)
-
-
-
-
+    elif interCodeArray[karel.index] == FRONT_IS_FULL:
+        return checkFrontIsFull(karel)
+    elif interCodeArray[karel.index] == FRONT_IS_NOT_FULL:
+        return checkFrontIsNotFull(karel)
+    elif interCodeArray[karel.index] == AM_I_ALONE:
+        return checkAmIAlone(karel)
+    elif interCodeArray[karel.index] == AM_I_NOT_ALONE:
+        return checkAmINotAlone(karel)
+    elif interCodeArray[karel.index] == IS_FATHER:
+        return checkIsFather(karel)
+    elif interCodeArray[karel.index] == IS_SON:
+        return checkIsSon(karel)
+    elif interCodeArray[karel.index] == IS_DESCENDANT:
+        return checkIsDescendant(karel)

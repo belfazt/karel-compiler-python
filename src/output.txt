@@ -1,6 +1,5 @@
 class
-pro
-gram
+program
 {
 void
 turnright
@@ -68,7 +67,7 @@ move
 )
 if
 (
-anyBeepersInBeeperBag
+isFather
 )
 {
 turnleft
@@ -88,6 +87,11 @@ move
 (
 )
 turnoff
+(
+)
+}
+}
+
 (
 )
 }

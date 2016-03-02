@@ -19,7 +19,7 @@ class program{
                 move()
                 turnright()
                 move()
-                if(anyBeepersInBeeperBag){
+                if(isSon){
                         turnleft()
                 }
                 move()

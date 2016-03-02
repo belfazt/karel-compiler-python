@@ -356,6 +356,48 @@ def checkNotFacingWest(karel):
 	'''
 	return not checkFacingWest(karel)
 
+def checkFrontIsFull(karel):
+	'''
+	    This method returns True if no more Karels are allowd to be on the front space. 
+	'''
+	return True
+
+def checkFrontIsNotFull(karel):
+	'''
+	    This method returns True if more Karels are allowd to be on the front space.
+	'''
+	return True
+
+def checkAmIAlone(karel):
+	'''
+	    This method returns True if Karel is the only one occupying his current position.
+	'''
+	return True
+
+def checkAmINotAlone(karel):
+	'''
+	    This method returns True if Karel is not the only one occupying his current position.
+	'''
+	return True
+
+def checkIsFather(karel):
+	'''
+	    This method returns True if the other Karel in the same place is his father.
+	'''
+	return True
+
+def checkIsSon(karel):
+	'''
+	    This method returns True if the other Karel in the same place is his son.
+	'''
+	return True
+
+def checkIsDescendant(karel):
+	'''
+	    This method returns True if the other Karel in the same place is his descendant.
+	'''
+	return True
+
 def printWorld():
 	'''
 	    This method draws the world to the graphic user interface 
