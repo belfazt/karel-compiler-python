@@ -9,7 +9,7 @@ InterCodeIndex=0
 #<program> ::= "class program" "{" <functions> <main function> "}"
 def program():
     '''
-        Validates this grammar: <program> ::= "class program" "{" <functions> <main function> "}"    
+        Validates this grammar: <program> ::= "class program" "{" <functions> <main function> "}"
         And creates the interCode by reading from the intercodeFile
     '''
     global InterCode
@@ -22,11 +22,11 @@ def program():
                 InterCodeIndex += 2
                 functions()
                 main_function()
-                if not exigir("}"):  
+                if not exigir("}"):
                     showErrorMessage(3, getLine())
-        else: 
+        else:
             showErrorMessage(4, getLine())
-    else: 
+    else:
         showErrorMessage(4, getLine())
     intercodeFile=open("intercodeFile.txt",'w')
     intercodeFile.write(str(InterCode))
@@ -35,10 +35,10 @@ def program():
      #   intercodeFile.write(" ")
     executeIntercode(InterCode)
 
-#<functions> ::= <functions prima> 
+#<functions> ::= <functions prima>
 def functions():
     '''
-        Validates this grammar <functions> ::= <functions prima> 
+        Validates this grammar <functions> ::= <functions prima>
     '''
     function_prima()
 
@@ -66,13 +66,13 @@ def main_function():
                     body()
                     if not exigir("}"):
                         showErrorMessage(3, getLine())
-                else: 
+                else:
                     showErrorMessage(1, getLine())
             else:
                 showErrorMessage(2, getLine())
         else:
             showErrorMessage(5, getLine())
-    else: 
+    else:
         showErrorMessage(4, getLine())
 
 #<function> := "void" <name function> "()" "{" <body> "}"
@@ -96,7 +96,7 @@ def function():
                 else:
                     showErrorMessage(1, getLine())
             else:
-                showErrorMessage(2, getLine())  
+                showErrorMessage(2, getLine())
         else:
             showErrorMessage(5, getLine())
     else:
@@ -129,14 +129,6 @@ def expressions():
     expressions_prima()
 
 
-#<expressions prima> ::= <expression> <expressions prima> | lambda
-def expressions_prima():
-    '''
-        Validates this grammar: <expressions prima> ::= <expression> <expressions prima> | lambda
-    ''' 
-    if not leer("}"):
-        expression()
-        expressions_prima()
 
 #<expression> ::= <call function> |
 #  <if expression> |
@@ -154,7 +146,17 @@ def expression():
         iterate_expression()
     else:
         call_function()
-     
+
+
+#<expressions prima> ::= <expression> <expressions prima> | lambda
+def expressions_prima():
+    '''
+        Validates this grammar: <expressions prima> ::= <expression> <expressions prima> | lambda
+    '''
+    if not leer("}"):
+        expression()
+        expressions_prima()
+
 
 #<call function> ::= <name of function> | <clone>
 def call_function():
@@ -165,7 +167,7 @@ def call_function():
         clone()
     else:
         name_of_function()
-    
+
 
 
 #<name of function> ::= <official function>() | <customer function>()
@@ -178,7 +180,7 @@ def name_of_function():
     else:
         customer_function()
 
-# <official function> ::= 
+# <official function> ::=
 #    "move" |
 #    "turnoff" |
 #    "pickbeeper" |
@@ -187,8 +189,8 @@ def name_of_function():
 
 def official_function():
     '''
-        Validates this grammar: 
-                <official function> ::= 
+        Validates this grammar:
+                <official function> ::=
                                         "move" |
                                         "turnoff" |
                                         "pickbeeper" |
@@ -209,14 +211,14 @@ def official_function():
             exigir("move")
             InterCode.append(MOVE)
             InterCodeIndex+=1
-    elif leer("pickbeeper"):    
+    elif leer("pickbeeper"):
             exigir("pickbeeper")
             InterCode.append(PICK_BEEPER)
             InterCodeIndex+=1
-    elif leer("putbeeper"):  
+    elif leer("putbeeper"):
             exigir("putbeeper")
             InterCode.append(PUT_BEEPER)
-            InterCodeIndex+=1         
+            InterCodeIndex+=1
     if exigir("("):
         if not exigir(")"):
             showErrorMessage(2, getLine())
@@ -240,7 +242,7 @@ def customer_function():
         InterCode.append(PosFunctionInCodeInter)
 #       InterCode[ InterCodeIndex ] = PosFunctionInCodeInter
         InterCodeIndex += 1
-    else: 
+    else:
         showErrorMessage(6, getLine())
     if exigir("("):
         if not exigir(")"):
@@ -265,7 +267,7 @@ def if_expression():
         if exigir("("):
             conditional()
             if exigir(")"):
-                InterCode.append(JMP)               
+                InterCode.append(JMP)
                 #InterCode[ InterCodeIndex ] = JMP
                 InterCodeIndex += 1
                 InterCode.append('')
@@ -350,7 +352,7 @@ def while_expression():
                     InterCode[ PosX_jmptrue ] = InterCodeIndex
                 else:
                     showErrorMessage(1, getLine())
-                    #error de sintaxis, fin de ejecucion   
+                    #error de sintaxis, fin de ejecucion
             else:
                 showErrorMessage(2, getLine())
                 #error de sintaxis, fin de ejecucion
@@ -387,7 +389,7 @@ def iterate_expression():
                         #error de sintaxis, fin de ejecucion
                 else:
                     showErrorMessage(1, getLine())
-                    #error de sintaxis, fin de ejecucion 
+                    #error de sintaxis, fin de ejecucion
             else:
                 showErrorMessage(2, getLine())
                 #error de sintaxis, fin de ejecucion
@@ -396,7 +398,7 @@ def iterate_expression():
             #error de sintaxis, fin de ejecucion
     else:
         showErrorMessage(4, getLine())
-        
+
 
 
 #<conditional> ::= <simple condition> | <composed condition>
@@ -418,7 +420,7 @@ def conditional():
     else:
         composed_condition(jumps)
 
-#<simple condition> ::= 
+#<simple condition> ::=
 #  "frontIsClear"
 #  | "frontIsBlocked"
 #  | "leftIsClear"
@@ -448,7 +450,7 @@ def conditional():
 def simple_condition():
     '''
         Validates this grammar:
-            <simple condition> ::= 
+            <simple condition> ::=
                                     "frontIsClear"
                                     | "frontIsBlocked"
                                     | "leftIsClear"
@@ -479,67 +481,67 @@ def simple_condition():
     global InterCodeIndex
     if leer("frontIsClear"):
         exigir("frontIsClear")
-        InterCode.append(FRONT_IS_CLEAR)        
+        InterCode.append(FRONT_IS_CLEAR)
         InterCodeIndex += 1
     elif leer("frontIsBlocked"):
         exigir("frontIsBlocked")
-        InterCode.append(FRONT_IS_BLOCKED)        
+        InterCode.append(FRONT_IS_BLOCKED)
         InterCodeIndex += 1
     elif leer("leftIsClear"):
         exigir("leftIsClear")
-        InterCode.append(LEFT_IS_CLEAR)        
+        InterCode.append(LEFT_IS_CLEAR)
         InterCodeIndex += 1
     elif leer("leftIsBlocked"):
         exigir("leftIsBlocked")
-        InterCode.append(LEFT_IS_BLOCKED)        
+        InterCode.append(LEFT_IS_BLOCKED)
         InterCodeIndex += 1
     elif leer("rightIsClear"):
         exigir("rightIsClear")
-        InterCode.append(RIGHT_IS_CLEAR)        
+        InterCode.append(RIGHT_IS_CLEAR)
         InterCodeIndex += 1
     elif leer("rightIsBlocked"):
         exigir("rightIsBlocked")
-        InterCode.append(RIGHT_IS_BLOCKED)        
+        InterCode.append(RIGHT_IS_BLOCKED)
         InterCodeIndex += 1
     elif leer("nextToABeeper"):
         exigir("nextToABeeper")
-        InterCode.append(NEXT_TO_A_BEEPER)        
+        InterCode.append(NEXT_TO_A_BEEPER)
         InterCodeIndex += 1
     elif leer("notNextToABeeper"):
         exigir("notNextToABeeper")
-        InterCode.append(NOT_NEXT_TO_A_BEEPER)        
+        InterCode.append(NOT_NEXT_TO_A_BEEPER)
         InterCodeIndex += 1
     elif leer("anyBeepersInBeeperBag"):
         exigir("anyBeepersInBeeperBag")
-        InterCode.append(ANY_BEEPERS_IN_BEEPER_BAG)        
+        InterCode.append(ANY_BEEPERS_IN_BEEPER_BAG)
         InterCodeIndex += 1
     elif leer("noBeepersInBeeperBag"):
         exigir("noBeepersInBeeperBag")
-        InterCode.append(NO_BEEPERS_IN_BEEPER_BAG)        
+        InterCode.append(NO_BEEPERS_IN_BEEPER_BAG)
         InterCodeIndex += 1
     elif leer("facingNorth"):
         exigir("facingNorth")
-        InterCode.append(FACING_NORTH)        
+        InterCode.append(FACING_NORTH)
         InterCodeIndex += 1
     elif leer("facingSouth"):
         exigir("facingSouth")
-        InterCode.append(FACING_SOUTH)        
+        InterCode.append(FACING_SOUTH)
         InterCodeIndex += 1
     elif leer("facingEast"):
         exigir("facingEast")
-        InterCode.append(FACING_EAST)        
+        InterCode.append(FACING_EAST)
         InterCodeIndex += 1
     elif leer("facingWest"):
         exigir("facingWest")
-        InterCode.append(FACING_WEST)        
+        InterCode.append(FACING_WEST)
         InterCodeIndex += 1
     elif leer("notFacingNorth"):
         exigir("notFacingNorth")
-        InterCode.append(NOT_FACING_NORTH)        
+        InterCode.append(NOT_FACING_NORTH)
         InterCodeIndex += 1
     elif leer("notFacingSouth"):
         exigir("notFacingSouth")
-        InterCode.append(NOT_FACING_SOUTH)        
+        InterCode.append(NOT_FACING_SOUTH)
         InterCodeIndex += 1
     elif leer("notFacingEast"):
         exigir("notFacingEast")
@@ -579,7 +581,7 @@ def simple_condition():
         InterCodeIndex += 1
     else:
         showErrorMessage(0, getLine())
-    
+
 def composed_condition(jumps):
     '''
         Validates if the conditions is an "or" or an "and" and call the proper function, if none, show an error
@@ -610,7 +612,7 @@ def or_condition(jumps):
         not_condition()
     else:
         simple_condition()
-         
+
 
 def and_condition(jumps):
     '''
@@ -641,12 +643,12 @@ def not_condition():
     InterCode.append(NOT)
     InterCodeIndex+=1
     simple_condition()
-    
+
 #<clone> ::= "clone" "("<customer function>")"
 
 def clone():
     '''
-        Validates this grammar: <clone> ::= "clone" "("<customer function>")"                
+        Validates this grammar: <clone> ::= "clone" "("<customer function>")"
     '''
     global InterCodeIndex
     if exigir("clone"):
