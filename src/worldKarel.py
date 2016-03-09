@@ -3,7 +3,7 @@ import time
 import copy
 import sys
 
-worldFile = open('world.txt', 'r')
+worldFile = open('../worlds/world.txt', 'r')
 rows = int()
 columns = int()
 world = list()

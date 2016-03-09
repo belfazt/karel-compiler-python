@@ -12,19 +12,21 @@ size = (720 , 740)
 frame.SetSize(size)
 frame.Show()
 
+baseAssetsPath = '../assets/'
+imagesPath = baseAssetsPath + 'images/'
 # Paint world
-aladdinDown = wx.Image('images/down.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-aladdinUp = wx.Image('images/up.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-aladdinRight = wx.Image('images/right.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-aladdinLeft = wx.Image('images/left.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-aladdinDownBeep = wx.Image('images/downbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-aladdinUpBeep = wx.Image('images/upbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-aladdinRightBeep = wx.Image('images/rightbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-aladdinLeftBeep = wx.Image('images/leftbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-free = wx.Image('images/free.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-bad = wx.Image('images/bad1.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-beeper = wx.Image('images/beeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-bad2 = wx.Image('images/bad2.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinDown = wx.Image(imagesPath + 'down.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinUp = wx.Image(imagesPath + 'up.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinRight = wx.Image(imagesPath + 'right.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinLeft = wx.Image(imagesPath + 'left.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinDownBeep = wx.Image(imagesPath + 'downbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinUpBeep = wx.Image(imagesPath + 'upbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinRightBeep = wx.Image(imagesPath + 'rightbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+aladdinLeftBeep = wx.Image(imagesPath + 'leftbeeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+free = wx.Image(imagesPath + 'free.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+bad = wx.Image(imagesPath + 'bad1.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+beeper = wx.Image(imagesPath + 'beeper.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+bad2 = wx.Image(imagesPath + 'bad2.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
 
 
 copyWorld = list()

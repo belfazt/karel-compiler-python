@@ -7,8 +7,8 @@ import sys
     to gather all the valid tokens fails if an invalid tokens is read.
     Also writes the output (list of tokens) to the output.txt file
 '''
-inp = open('inputnew.txt','r')
-out = open('output.txt', 'w')
+inp = open('../samples/input.txt','r')
+out = open('../out/output.txt', 'w')
 tokens_dic = {'(': 'PA', ')': 'PC', '{': 'LLA', '}': 'LLC','!':'NOT','0':'CAD','1':'NUM', '&&':'AND', '||':'OR'}
 symbol_table = list()
 line = 1

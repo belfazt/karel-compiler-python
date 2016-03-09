@@ -28,7 +28,7 @@ def program():
             showErrorMessage(4, getLine())
     else:
         showErrorMessage(4, getLine())
-    intercodeFile=open("intercodeFile.txt",'w')
+    intercodeFile = open("../out/intercodeFile.txt",'w')
     intercodeFile.write(str(InterCode))
     #for x in InterCode:
      #   intercodeFile.write(str(x))
