@@ -2,6 +2,7 @@
 #Alma Lorena Gonzalez Lopez
 #Maya Alba Perez
 import sys
+import os
 '''
     This module contains the lexicographical functionality. Reads from the input.kl file
     to gather all the valid tokens fails if an invalid tokens is read.
