@@ -28,11 +28,8 @@ def program():
             showErrorMessage(4, getLine())
     else:
         showErrorMessage(4, getLine())
-    intercodeFile = open("../out/intercodeFile.txt",'w')
+    intercodeFile = open("../out/compiled.icode",'w')
     intercodeFile.write(str(InterCode))
-    #for x in InterCode:
-     #   intercodeFile.write(str(x))
-     #   intercodeFile.write(" ")
     executeIntercode(InterCode)
 
 #<functions> ::= <functions prima>
@@ -175,7 +172,7 @@ def name_of_function():
     '''
         Validates this grammar: <name of function> ::= <official function>() | <customer function>()
     '''
-    if leer("move") or leer("turnoff") or leer("pickbeeper") or leer("turnleft") or leer("putbeeper"):
+    if leer("move") or leer("turnoff") or leer("pickbeeper") or leer("turnleft") or leer("putbeeper") or leer("givebeeper"):
         official_function()
     else:
         customer_function()
@@ -186,6 +183,7 @@ def name_of_function():
 #    "pickbeeper" |
 #    "turnleft" |
 #    "putbeeper" |
+#    "giveBeeper" |
 
 def official_function():
     '''
@@ -196,9 +194,11 @@ def official_function():
                                         "pickbeeper" |
                                         "turnleft" |
                                         "putbeeper" |
+                                        "givebeeper" |
     '''
     global InterCode
     global InterCodeIndex
+    needsArgument = False
     if leer("turnleft"):
         exigir("turnleft")  #turn left karel
         InterCode.append(TURN_LEFT)
@@ -219,7 +219,15 @@ def official_function():
             exigir("putbeeper")
             InterCode.append(PUT_BEEPER)
             InterCodeIndex+=1
+    elif leer("givebeeper"):
+            exigir("givebeeper")
+            InterCode.append(GIVE_BEEPER)
+            InterCodeIndex+=1
+            needsArgument = True
     if exigir("("):
+        if needsArgument:
+            beepersToGive=(int(current()))
+            currentTokenMod(1)
         if not exigir(")"):
             showErrorMessage(2, getLine())
     else:

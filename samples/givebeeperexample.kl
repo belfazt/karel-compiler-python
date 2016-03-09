@@ -1,0 +1,32 @@
+class program{
+        void turnright(){
+                iterate(3){
+                        turnleft()
+                }
+        }
+        void son(){
+                while(nextToABeeper){
+                        pickbeeper()
+                }
+                move()
+                move()
+                turnoff()
+        }
+        program(){ 
+                move()
+                givebeeper(5)
+                move()
+                clone(son())
+                move()
+                turnright()
+                move()
+                if(isSon){
+                        turnleft()
+                }
+                move()
+                move()
+                move()
+                move()
+                turnoff()
+        }
+}

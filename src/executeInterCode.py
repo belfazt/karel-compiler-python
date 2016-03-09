@@ -84,6 +84,12 @@ def executeInterCodeLine(karel,interCodeArray):
         karel.index+=1
         if worldKarel.flagNoErrors:
             printWorld()
+    elif interCodeArray[karel.index] == GIVE_BEEPER:
+        print "This is GIVE_BEEPER"
+        givebeeper(karel)
+        karel.index+=1
+        if worldKarel.flagNoErrors:
+            printWorld()
     elif interCodeArray[karel.index] == CLONE:
         print "this is clone"
         karel.index+=2

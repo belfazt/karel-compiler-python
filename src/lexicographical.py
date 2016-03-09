@@ -3,12 +3,12 @@
 #Maya Alba Perez
 import sys
 '''
-    This module contains the lexicographical functionality. Reads from the inputnew.txt file
+    This module contains the lexicographical functionality. Reads from the input.kl file
     to gather all the valid tokens fails if an invalid tokens is read.
-    Also writes the output (list of tokens) to the output.txt file
+    Also writes the output (list of tokens) to the per_line.kl file
 '''
-inp = open('../samples/input.txt','r')
-out = open('../out/output.txt', 'w')
+inp = open('../samples/input.kl','r')
+out = open('../out/per_line.kl', 'w')
 tokens_dic = {'(': 'PA', ')': 'PC', '{': 'LLA', '}': 'LLC','!':'NOT','0':'CAD','1':'NUM', '&&':'AND', '||':'OR'}
 symbol_table = list()
 line = 1

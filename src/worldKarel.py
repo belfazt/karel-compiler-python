@@ -145,6 +145,9 @@ def putbeeper(karel):
 		print "I don't have a beeper to leave :("
 		flagNoErrors = False
 
+def givebeeper(karel):
+	pass
+
 
 def checkFrontIsClear(karel):
 	'''
@@ -358,13 +361,13 @@ def checkNotFacingWest(karel):
 
 def checkFrontIsFull(karel):
 	'''
-	    This method returns True if no more Karels are allowd to be on the front space. 
+	    This method returns True if no more Karels are allowed to be on the front space. 
 	'''
 	return True
 
 def checkFrontIsNotFull(karel):
 	'''
-	    This method returns True if more Karels are allowd to be on the front space.
+	    This method returns True if more Karels are allowed to be on the front space.
 	'''
 	return True
 
