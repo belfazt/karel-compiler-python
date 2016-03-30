@@ -1,0 +1,90 @@
+<program> ::= "class program" "{" <functions> <main function> "}"
+
+<functions> ::= <functions prima>
+
+<functions prima> ::= <function> <functions prima> | lambda
+
+<main function> ::= "program()" "{" <body> "}"
+
+<function> := "void" <name function> "()" "{" <body> "}"
+
+ <name function> ::= <string without spaces>
+
+<body> ::= <expressions>
+
+<expressions> ::= <expression> <expressions prima>
+
+<expressions prima> ::= <expression> <expressions prima> | lambda
+
+<expression> ::= <call function> |
+  <if expression> |
+  <while expression> |
+  <iterate expression>
+
+<call function> ::= <name of function> | <clone>
+
+<name of function> ::= <official functions> | <customer function>()
+
+<official functions> ::= <parallel functions> | <normal functions>
+
+<parallel functions> ::=
+  "clone" "("<customer function>")" |
+  "giveBeeper" "(" <number> ")"
+
+<normal functions> ::=
+  "move" "(" ")" |
+  "turnoff" "(" ")" |
+  "pickbeeper" "(" ")" |
+  "turnleft" "(" ")" |
+  "putbeeper" "(" ")"
+
+<customer function> ::= <string without spaces>
+
+<if expression> ::= "if" ( <conditional> ) "{" <body> "}" [ <elseif> ]
+
+<elseif> ::= "else" "{" <body> "}"
+
+<while expression> ::= "while" "(" <conditional> ")" "{" <body> "}"
+
+<iterate expression> ::= "iterate" "(" <number> ")" "{" <body> "}"
+
+<conditional> ::= <simple condition> | <composed condition>
+
+<simple condition> ::=
+  "frontIsClear"
+  | "frontIsBlocked"
+  | "leftIsClear"
+  | "leftIsBlocked"
+  | "rightIsClear"
+  | "rightIsBlocked"
+  | "nextToABeeper"
+  | "notNextToABeeper"
+  | "anyBeepersInBeeperBag"
+  | "noBeepersInBeeperBag"
+  | "facingNorth"
+  | "facingSouth"
+  | "facingEast"
+  | "facingWest"
+  | "notFacingNorth"
+  | "notFacingSouth"
+  | "notFacingEast"
+  | "notFacingWest"
+  | "frontIsFull"
+  | "frontIsNotFull"
+  | "amIAlone"
+  | "amINotAlone"
+  | "isFather"
+  | "isSon"
+  | "isDescendant"
+
+<composed condition> ::= <condition> <composed condition prima>
+
+<composed condition prima> ::= <or condition> <composed condition prima> | lambda
+
+<or condition> ::= "||" <condition> | <and condition>
+
+<and condition> ::= "&&" <condition>| lambda
+
+<condition> ::= <not condition> <simple condition>
+
+<not condition> ::= "!" | lambda
