@@ -411,19 +411,39 @@ def checkIsFather(karel):
 	'''
 	    This method returns True if the other Karel in the same place is his father.
 	'''
-	return True
+	return _getCompanion(karel).id == karel.idF
 
 def checkIsSon(karel):
 	'''
 	    This method returns True if the other Karel in the same place is his son.
 	'''
-	return True
+
+	return _getCompanion(karel).idF == karel.id
 
 def checkIsDescendant(karel):
 	'''
 	    This method returns True if the other Karel in the same place is his descendant.
 	'''
-	return True
+
+	companion = _getCompanion(karel)
+
+	if companion == None:
+		return False
+	if companion.id < karel.id: 
+		return False
+	if checkIsSon(karel):
+		return True
+
+	currentDescendant = companion.idF
+	for k in reversed(xrange(karel.id, companion.id)):
+		if k.id != currentDescendant:
+			continue
+		if k.idF == karel.id:
+			return True
+		else:
+			currentDescendant = k.idF
+
+	return False
 
 def printWorld():
 	'''
@@ -479,3 +499,13 @@ def leaveWorld(karel):
 	print "Leaving World"
 	karelList.remove(karel)
 	world[karel.row][karel.col].remove(karel)
+
+def _getCompanion(karel):
+
+	'''
+	'''
+
+	for companion in karelList:
+		if companion.id != karel.id and companion.row == karel.row and companion.col == karel.col:
+			return companion
+	return None
