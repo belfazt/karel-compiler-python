@@ -5,16 +5,14 @@ class program{
                 }
         }
         void son(){
-                while(nextToABeeper){
-                        pickbeeper()
-                }
-                move()
-                move()
-                turnoff()
+                turnleft()
         }
         program(){ 
                 move()
                 move()
                 clone(son())
+                move()
+                turnleft()
+                turnoff()
         }
 }

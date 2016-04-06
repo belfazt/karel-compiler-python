@@ -352,7 +352,7 @@ def checkFacingWest(karel):
 	'''
 	    This method returns True if Karel instance is facing to West False otherwise 
 	'''
-	return karel.facing == "left":
+	return karel.facing == "left"
 
 def checkNotFacingWest(karel):
 	'''
@@ -411,14 +411,15 @@ def checkIsFather(karel):
 	'''
 	    This method returns True if the other Karel in the same place is his father.
 	'''
-	return _getCompanion(karel).id == karel.idF
+	companion = _getCompanion(karel)
+	return companion is not None and companion.id == karel.idF
 
 def checkIsSon(karel):
 	'''
 	    This method returns True if the other Karel in the same place is his son.
 	'''
-
-	return _getCompanion(karel).idF == karel.id
+	companion = _getCompanion(karel)
+	return companion is not None and companion.idF == karel.id
 
 def checkIsDescendant(karel):
 	'''
@@ -465,7 +466,7 @@ def printWorld():
 		print 
     
 	repaint(world)
-	time.sleep(0.1)
+	time.sleep(0.2)
 
 def finalWorld():
 	'''
