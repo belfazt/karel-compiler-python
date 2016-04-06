@@ -147,7 +147,10 @@ def putbeeper(karel):
 		flagNoErrors = False
 
 def givebeeper(karel):
-	pass
+	companion = _getCompanion(karel)
+	if companion != None:
+		putbeeper(karel)
+		pickBeeper(companion)
 
 
 def checkFrontIsClear(karel):
@@ -349,10 +352,7 @@ def checkFacingWest(karel):
 	'''
 	    This method returns True if Karel instance is facing to West False otherwise 
 	'''
-	if karel.facing == "left":
-		return True
-	else:
-		return False
+	return karel.facing == "left":
 
 def checkNotFacingWest(karel):
 	'''
@@ -364,25 +364,48 @@ def checkFrontIsFull(karel):
 	'''
 	    This method returns True if no more Karels are allowed to be on the front space. 
 	'''
-	return True
+	if karel.facing == "left":
+		if karel.col==0:
+			return False
+		else:
+			content = world[karel.row][karel.col-1]
+	elif karel.facing == "right":
+		if karel.col==columns-1:
+			return False
+		else:
+			content = world[karel.row][karel.col+1]
+	elif karel.facing == "up":
+		if karel.row==0:
+			return False
+		else:
+			content = world[karel.row-1][karel.col]
+	elif karel.row==rows-1:
+		return False
+	else:
+		content = world[karel.row+1][karel.col]
+
+	if "x" in content:
+		return False
+	else:
+		return True
 
 def checkFrontIsNotFull(karel):
 	'''
 	    This method returns True if more Karels are allowed to be on the front space.
 	'''
-	return True
+	return not checkFrontIsFull(karel)
 
 def checkAmIAlone(karel):
 	'''
 	    This method returns True if Karel is the only one occupying his current position.
 	'''
-	return True
+	return _getCompanion(karel) == None
 
 def checkAmINotAlone(karel):
 	'''
 	    This method returns True if Karel is not the only one occupying his current position.
 	'''
-	return True
+	return not checkAmIAlone(karel)
 
 def checkIsFather(karel):
 	'''
