@@ -5,14 +5,17 @@ class program{
                 }
         }
         void son(){
-                turnright()
+                if(isFather){
+                        move()
+                        move()
+                }
+                turnoff()
         }
         program(){ 
-                move()
-                move()
                 clone(son())
-                move()
-                turnleft()
+                turnright()
+                turnright()
+                turnright()
                 turnoff()
         }
 }

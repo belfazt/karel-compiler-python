@@ -1,6 +1,6 @@
 import worldKarel
 
-class Karel:
+class Karel(object):
 	'''
 	    This class defines Karel's object:
 	    Karel has the following attributes
@@ -12,7 +12,7 @@ class Karel:
 	        -An alive attribute that indicates if Karel is or not 
 	        -Karel Stack which saves position old the interCodeArray after a call to a function 
 	'''
-	def __init__(self, id, index, idF, colF, rowF, facingF):
+	def __init__(self, id, index, idF = None, colF = None, rowF = None, facingF = None, father = None):
 		self.callStack = list()
 		self.iterateStack = list()
 		self.beepers = 0
@@ -20,10 +20,17 @@ class Karel:
 		self.id = id
 		self.name="Karel" + str(self.id)
 		self.index = index
-		self.idF = idF
-		self.col = colF
-		self.row = rowF
-		self.facing=self.setInitFacing(facingF)
+		self.father = father
+		if father != None:
+			self.idF = father.id
+			self.col = father.col
+			self.row = father.row
+			self.facing=self.setInitFacing(father.facing)	
+		else:
+			self.idF = idF
+			self.col = colF
+			self.row = rowF
+			self.facing=self.setInitFacing(facingF)
 
 	def pickBeeper(self):
 	    self.beepers+=1

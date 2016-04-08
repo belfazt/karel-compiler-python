@@ -35,19 +35,19 @@ def executeInterCodeLine(karel,interCodeArray):
     '''
     global karelFatherAlive
     if interCodeArray[karel.index] == CALL:
-        print "This is CALL"
+        print "CALL"
         karel.callStack.append(karel.index+2)
         karel.index = interCodeArray[karel.index+1]
         print karel.index
     elif interCodeArray[karel.index] == RET:
-        print "This is RET"
+        print "RET"
         karel.index = karel.callStack.pop()
         print karel.index
     elif interCodeArray[karel.index] == JMP:
-        print "This is JMP"
+        print "JMP"
         karel.index = interCodeArray[karel.index+1]
     elif interCodeArray[karel.index] == IF:
-        print "This is IF"
+        print "IF"
         karel.index += 1
         ifEval = conditionals(karel, interCodeArray)
         if ifEval:
@@ -55,7 +55,7 @@ def executeInterCodeLine(karel,interCodeArray):
         else:
             karel.index+=1
     elif interCodeArray[karel.index] == ITE:
-        print "This is ITE"
+        print "ITE"
         karel.index+=1
         if not interCodeArray[karel.index] == 0:
             interCodeArray[karel.index] = interCodeArray[karel.index]-1
@@ -63,37 +63,37 @@ def executeInterCodeLine(karel,interCodeArray):
         else:
             karel.index+=1
     elif interCodeArray[karel.index] == TURN_LEFT:
-        print "This is TURN_LEFT"
+        print "TURN_LEFT"
         turnleft(karel)
         karel.index+=1
     elif interCodeArray[karel.index] == MOVE:
-        print "This is MOVE"
+        print "MOVE"
         move(karel)
         karel.index+=1
         if worldKarel.flagNoErrors:
             printWorld()
     elif interCodeArray[karel.index] == PICK_BEEPER:
-        print "This is PICK_BEEPER"
+        print "PICK_BEEPER"
         pickbeeper(karel)
         karel.index+=1
         if worldKarel.flagNoErrors:
             printWorld()
     elif interCodeArray[karel.index] == PUT_BEEPER:
-        print "This is PUT_BEEPER"
+        print "PUT_BEEPER"
         putbeeper(karel)
         karel.index+=1
         if worldKarel.flagNoErrors:
             printWorld()
     elif interCodeArray[karel.index] == GIVE_BEEPER:
-        print "This is GIVE_BEEPER"
-        givebeeper(karel)
-        karel.index+=1
+        print "GIVE_BEEPER"
+        givebeeper(karel, interCodeArray[karel.index + 1])
+        karel.index+=2
         if worldKarel.flagNoErrors:
             printWorld()
     elif interCodeArray[karel.index] == CLONE:
-        print "this is clone"
+        print "CLONE"
         karel.index+=2
-        cloneKarel = Karel(len(worldKarel.karelList),interCodeArray[karel.index],karel.id,karel.col,karel.row,karel.facing)
+        cloneKarel = Karel(len(worldKarel.karelList), interCodeArray[karel.index], father = karel)
         worldKarel.karelList.append(cloneKarel)
         worldKarel.world[cloneKarel.row][cloneKarel.col].append(cloneKarel)
         worldKarel.printWorld()
@@ -113,7 +113,7 @@ def conditionals(karel, interCodeArray):
     '''
     global index
     if interCodeArray[karel.index] == OR:
-        print "This is OR"
+        print "OR"
         karel.index+=1
         exp1 = conditionals(interCodeArray)
         karel.index+=1
@@ -124,7 +124,7 @@ def conditionals(karel, interCodeArray):
         else:
             return False
     elif interCodeArray[karel.index] == AND:
-        print "This is AND"
+        print "AND"
         karel.index+=1
         exp1 = conditionals(interCodeArray)
         karel.index+=1
@@ -135,7 +135,7 @@ def conditionals(karel, interCodeArray):
         else:
             return False
     elif interCodeArray[karel.index] == NOT:
-        print "This is NOT"
+        print "NOT"
         karel.index+=1
         return not conditionalsKarel(karel, interCodeArray)
     else:

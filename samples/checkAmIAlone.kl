@@ -1,0 +1,12 @@
+class program{
+        program(){ 
+                move()
+                move()
+                move()
+                if(amIAlone) {
+                        turnleft()
+                        move()
+                }
+                turnoff()
+        }
+}

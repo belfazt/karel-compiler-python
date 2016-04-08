@@ -40,7 +40,7 @@ def createWorld():
 			if 'l' in c or 'r' in c or 'u' in c or 'd' in c:
 				if not mainKarel:
 					mainKarel=True
-					#self, id, index, idF, colF, rowF, facingF
+					#id, index, idF, colF, rowF, facingF
 					karelInit = Karel(0, 0, -1, j, i, c)
 					karelList.append(karelInit)
 					karelCount+=1
@@ -61,7 +61,7 @@ def move(karel):
 	'''
 	#checar que no se salga del mundo
 	global world, flagNoErrors
-	if checkFrontIsClear(karel):
+	if checkFrontIsClear(karel) and checkFrontIsNotFull(karel):
 		if karel.facing == "left":
 			if karel.col==0:
 				flagNoErrors=False
@@ -127,7 +127,7 @@ def pickbeeper(karel):
 	if "B" in world[karel.row][karel.col]:
 		world[karel.row][karel.col].remove("B")
 		karel.pickBeeper()
-		print "Picked a beeper"
+		print str(karel.name) + ": Picked a beeper"
 	else:
 		print "Error at picking beeper!"
 		flagNoErrors = False
@@ -141,16 +141,17 @@ def putbeeper(karel):
 	if karel.beepers > 0:
 		karel.dropBeeper()
 		world[karel.row][karel.col].append("B")
-		print "Put beeper down"
+		print str(karel.name) + ": Put beeper down"
 	else:
 		print "I don't have a beeper to leave :("
 		flagNoErrors = False
 
-def givebeeper(karel):
+def givebeeper(karel, count):
 	companion = _getCompanion(karel)
 	if companion != None:
-		putbeeper(karel)
-		pickBeeper(companion)
+		for i in xrange(count):
+			putbeeper(karel)
+			pickbeeper(companion)
 
 
 def checkFrontIsClear(karel):
@@ -275,10 +276,7 @@ def checkNextToBeeper(karel):
 	'''
 	    This method returns True if there is a beeper on the immediate intersections False otherwise 
 	'''
-	if "B" in world[karel.row][karel.col]:
-		return True
-	else:
-		return False
+	return "B" in world[karel.row][karel.col]
 	#if "B" in world[karel.row+1][karel.col] or "B" in world[karel.row-1][karel.col] or "B" in world[karel.row][karel.col-1] or "B" in world[karel.row][karel.col+1]:
 	#	return True
 	#else:
@@ -294,10 +292,7 @@ def checkAnyBeepers(karel):
 	'''
 	    This method returns True if Karel instance has at least one beeper False otherwise 
 	'''
-	if karel.beepers > 0:
-		return True
-	else:
-		return False
+	return karel.beepers > 0
 
 def checkNotAnyBeepers(karel):
 	'''
@@ -309,10 +304,8 @@ def checkFacingNorth(karel):
 	'''
 	    This method returns True if Karel instance is facing to North False otherwise 
 	'''
-	if karel.facing == "up":
-		return True
-	else:
-		return False
+	return karel.facing == "up"
+
 def checkNotFacingNorth(karel):
 	'''
 	    This method returns True if Karel instance is not facing to North False otherwise 
@@ -323,10 +316,8 @@ def checkFacingSouth(karel):
 	'''
 	    This method returns True if Karel instance is facing to South False otherwise 
 	'''
-	if karel.facing == "down":
-		return True
-	else:
-		return False
+	return karel.facing == "down"
+
 def checkNotFacingSouth(karel):
 	'''
 	    This method returns True if Karel instance is not facing to North False otherwise 
@@ -337,10 +328,7 @@ def checkFacingEast(karel):
 	'''
 	    This method returns True if Karel instance is facing to East False otherwise 
 	'''
-	if karel.facing == "right":
-		return True
-	else:
-		return False
+	return karel.facing == "right"
 
 def checkNotFacingEast(karel):
 	'''
@@ -384,10 +372,11 @@ def checkFrontIsFull(karel):
 	else:
 		content = world[karel.row+1][karel.col]
 
-	if "x" in content:
-		return False
-	else:
-		return True
+	count = 0
+	for i in content:
+		if isinstance(i, Karel):
+			count = count + 1
+	return count >= 2
 
 def checkFrontIsNotFull(karel):
 	'''
@@ -414,6 +403,13 @@ def checkIsFather(karel):
 	companion = _getCompanion(karel)
 	return companion is not None and companion.id == karel.idF
 
+def checkIsNotFather(karel):
+	'''
+	    This method returns True if the other Karel in the same place is not his father.
+	'''
+	return not checkIsFather(karel)
+
+
 def checkIsSon(karel):
 	'''
 	    This method returns True if the other Karel in the same place is his son.
@@ -421,30 +417,35 @@ def checkIsSon(karel):
 	companion = _getCompanion(karel)
 	return companion is not None and companion.idF == karel.id
 
+def checkIsNotSon(karel):
+	'''
+	    This method returns True if the other Karel in the same place is not his son.
+	'''
+	return not checkIsSon(karel)
+
 def checkIsDescendant(karel):
 	'''
 	    This method returns True if the other Karel in the same place is his descendant.
 	'''
 
-	companion = _getCompanion(karel)
-
-	if companion == None:
-		return False
-	if companion.id < karel.id: 
-		return False
-	if checkIsSon(karel):
-		return True
-
-	currentDescendant = companion.idF
-	for k in reversed(xrange(karel.id, companion.id)):
-		if k.id != currentDescendant:
-			continue
-		if k.idF == karel.id:
+	current = _getCompanion(karel)
+	print 'CHECKING FOR DESCENDANCE'
+	while(current != None):
+		
+		if current.father == karel:
+			print 'IS DESCENDANT'
 			return True
 		else:
-			currentDescendant = k.idF
-
+			current = current.father
+	print 'IS NOT DESCENDANT'			
 	return False
+
+
+def checkIsNotDescendant(karel):
+	'''
+	    This method returns True if the other Karel in the same place is not his descendant.
+	'''	
+	return not checkIsDescendant(karel)
 
 def printWorld():
 	'''

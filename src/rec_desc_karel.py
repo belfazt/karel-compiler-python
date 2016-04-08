@@ -227,6 +227,8 @@ def official_function():
     if exigir("("):
         if needsArgument:
             beepersToGive=(int(current()))
+            InterCode.append(beepersToGive)
+            InterCodeIndex+=1
             currentTokenMod(1)
         if not exigir(")"):
             showErrorMessage(2, getLine())

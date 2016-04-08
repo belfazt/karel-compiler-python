@@ -1,0 +1,19 @@
+class program{
+        void son() {
+                turnleft()
+                turnleft()
+                turnleft()
+                turnoff()
+        }
+        program(){ 
+                move()
+                move()
+                move()
+                clone(son())
+                if(amINotAlone) {
+                        turnleft()
+                        move()
+                }
+                turnoff()
+        }
+}

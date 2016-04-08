@@ -4,12 +4,19 @@ class program{
                         turnleft()
                 }
         }
+        void sontwo(){
+                iterate(50) {
+                        turnleft()
+                }
+                turnoff()
+        }
         void son(){
-                pickbeeper()
-                pickbeeper()
-                givebeeper(2)
+                clone(sontwo())
                 move()
                 move()
+                iterate(100){
+                        turnleft()
+                }
                 turnoff()
         }
         program(){ 
@@ -17,16 +24,10 @@ class program{
                 move()
                 clone(son())
                 turnright()
-                turnright()
-                turnright()
-                move()
-                if(isSon){
-                        turnleft()
+                if (isDescendant) {
+                        turnright()
+                        move()
                 }
-                move()
-                move()
-                move()
-                move()
                 turnoff()
         }
 }

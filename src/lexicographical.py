@@ -8,7 +8,7 @@ import os
     to gather all the valid tokens fails if an invalid tokens is read.
     Also writes the output (list of tokens) to the per_line.kl file
 '''
-inp = open('../samples/input.kl','r')
+inp = open('../samples/checkIsFather.kl','r')
 out = open('../out/per_line.kl', 'w')
 tokens_dic = {'(': 'PA', ')': 'PC', '{': 'LLA', '}': 'LLC','!':'NOT','0':'CAD','1':'NUM', '&&':'AND', '||':'OR'}
 symbol_table = list()

@@ -5,28 +5,21 @@ class program{
                 }
         }
         void son(){
-                pickbeeper()
-                pickbeeper()
-                givebeeper(2)
                 move()
-                move()
+                iterate(100) {
+                        turnleft()
+                }
                 turnoff()
         }
         program(){ 
                 move()
                 move()
                 clone(son())
-                turnright()
-                turnright()
-                turnright()
-                move()
-                if(isSon){
+                clone(son())
+                if(frontIsFull) {
                         turnleft()
-                }
-                move()
-                move()
-                move()
-                move()
+                        move()
+                }                
                 turnoff()
         }
 }
