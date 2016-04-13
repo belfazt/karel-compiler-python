@@ -5,29 +5,28 @@ class program{
                 }
         }
         void son(){
-                while(nextToABeeper){
-                        pickbeeper()
+                turnleft()
+                turnleft()
+                if(isNotSon){
+                        move()
+                        move()
+                        move()
                 }
-                move()
-                move()
+                iterate(100){
+                        turnleft()
+                }
                 turnoff()
         }
-        program(){
+        program(){ 
+                move()
+                move()
                 move()
                 move()
                 clone(son())
-                move()
-                if (isSon) {
+                iterate(100){
                         turnleft()
                 }
-                move()
-                if(isSon && facingNorth){
-                        turnleft()
-                }
-                move()
-                move()
-                move()
-                move()
+                turnright()
                 turnoff()
         }
 }

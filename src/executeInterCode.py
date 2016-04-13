@@ -195,7 +195,13 @@ def conditionalsKarel(karel, interCodeArray):
         return checkAmINotAlone(karel)
     elif interCodeArray[karel.index] == IS_FATHER:
         return checkIsFather(karel)
+    elif interCodeArray[karel.index] == IS_NOT_FATHER:
+        return checkIsNotFather(karel)
     elif interCodeArray[karel.index] == IS_SON:
         return checkIsSon(karel)
+    elif interCodeArray[karel.index] == IS_NOT_SON:
+        return checkIsNotSon(karel)
     elif interCodeArray[karel.index] == IS_DESCENDANT:
         return checkIsDescendant(karel)
+    elif interCodeArray[karel.index] == IS_NOT_DESCENDANT:
+        return checkIsNotDescendant(karel)

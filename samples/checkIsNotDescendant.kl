@@ -1,0 +1,35 @@
+class program{
+        void turnright(){
+                iterate(3){
+                        turnleft()
+                }
+        }
+        void sontwo(){
+                if (isNotDescendant) {
+                        turnright()
+                        turnright()
+                        move()
+                }
+                turnoff()
+        }
+        void son(){
+                clone(sontwo())
+                move()
+                move()
+                iterate(100){
+                        turnleft()
+                }
+                turnoff()
+        }
+        program(){ 
+                move()
+                move()
+                clone(son())
+                iterate(50) {
+                        turnleft()
+                }
+                turnright()
+                
+                turnoff()
+        }
+}

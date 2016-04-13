@@ -454,8 +454,11 @@ def conditional():
 #  | "amIAlone"
 #  | "amINotAlone"
 #  | "isFather"
+#  | "isNotFather"
 #  | "isSon"
+#  | "isNotSon"
 #  | "isDescendant"
+#  | "isNotDescendant"
 
 def simple_condition():
     '''
@@ -484,8 +487,11 @@ def simple_condition():
                                     | "amIAlone"
                                     | "amINotAlone"
                                     | "isFather"
+                                    | "isNotFather"
                                     | "isSon"
+                                    | "isNotSon"
                                     | "isDescendant" 
+                                    | "isNotDescendant" 
     '''
     global Intercode
     global InterCodeIndex
@@ -581,13 +587,25 @@ def simple_condition():
         exigir("isFather")
         InterCode.append(IS_FATHER)
         InterCodeIndex += 1
+    elif leer("isNotFather"):
+        exigir("isNotFather")
+        InterCode.append(IS_NOT_FATHER)
+        InterCodeIndex += 1
     elif leer("isSon"):
         exigir("isSon")
         InterCode.append(IS_SON)
         InterCodeIndex += 1
+    elif leer("isNotSon"):
+        exigir("isNotSon")
+        InterCode.append(IS_NOT_SON)
+        InterCodeIndex += 1
     elif leer("isDescendant"):
         exigir("isDescendant")
         InterCode.append(IS_DESCENDANT)
+        InterCodeIndex += 1
+    elif leer("isNotDescendant"):
+        exigir("isNotDescendant")
+        InterCode.append(IS_NOT_DESCENDANT)
         InterCodeIndex += 1
     else:
         showErrorMessage(0, getLine())

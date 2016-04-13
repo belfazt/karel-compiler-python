@@ -1,0 +1,27 @@
+class program{
+        void turnright(){
+                iterate(3) {
+                        turnleft()
+                }
+        }
+        void son(){
+                move()
+                iterate(100) {
+                        turnleft()
+                }
+                turnoff()
+        }
+        program(){ 
+                move()
+                move()
+                clone(son())
+                if(frontIsNotFull) {
+                        turnleft()
+                        move()
+                }
+                iterate(100) {
+                        turnleft()
+                }         
+                turnoff()
+        }
+}

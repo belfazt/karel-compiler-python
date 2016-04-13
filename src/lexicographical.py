@@ -8,7 +8,21 @@ import os
     to gather all the valid tokens fails if an invalid tokens is read.
     Also writes the output (list of tokens) to the per_line.kl file
 '''
-inp = open('../samples/checkIsFather.kl','r')
+
+inp = open('../samples/checkAmIAlone.kl','r')
+#inp = open('../samples/checkAmINotAlone.kl','r')
+#inp = open('../samples/checkIsDescendant.kl','r')
+#inp = open('../samples/checkIsNotDescendant.kl','r')
+#inp = open('../samples/checkIsFather.kl','r')
+#inp = open('../samples/checkIsNotFather.kl','r')
+#inp = open('../samples/checkIsSon.kl','r')
+#inp = open('../samples/checkIsNotSon.kl','r')
+#inp = open('../samples/checkFrontIsFull.kl','r')
+#inp = open('../samples/checkFrontIsNotFull.kl','r')
+#inp = open('../samples/createclone.kl','r')
+#inp = open('../samples/givebeeperexample.kl','r')
+#inp = open('../samples/composedconditionsexample.kl','r')
+
 out = open('../out/per_line.kl', 'w')
 tokens_dic = {'(': 'PA', ')': 'PC', '{': 'LLA', '}': 'LLC','!':'NOT','0':'CAD','1':'NUM', '&&':'AND', '||':'OR'}
 symbol_table = list()
