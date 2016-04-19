@@ -4,7 +4,7 @@ import time
 import copy
 import sys
 
-worldFile = open('../worlds/world.txt', 'r')
+worldFile = open('../worlds/testProfe.txt', 'r')
 rows = int()
 columns = int()
 world = list()
