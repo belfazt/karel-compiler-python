@@ -4,28 +4,24 @@ class program{
                         turnleft()
                 }
         }
-        void son(){
-                while(nextToABeeper){
-                        pickbeeper()
-                }
-                move()
-                move()
-                turnoff()
-        }
-        program(){ 
-                move()
-                move()
-                clone(son())
-                move()
-                turnright()
-                move()
-                if(isSon){
+        void go(){
+                while(notFacingSouth){
                         turnleft()
                 }
-                move()
-                move()
-                move()
-                move()
+                while(frontIsClear){
+                        move()
+                        if(frontIsBlocked){
+                                if(facingSouth){
+                                        turnright()
+                                }
+                                if(facingWest){
+                                        turnleft()
+                                }
+                        }
+                }
+        }
+        program(){ 
+                go()
                 turnoff()
         }
 }
