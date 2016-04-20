@@ -33,12 +33,13 @@ class Karel(object):
 			self.facing=self.setInitFacing(facingF)
 
 	def pickBeeper(self):
-	    self.beepers+=1
+	    self.beepers += 1
 
 	def dropBeeper(self):
-	    self.beepers-=1
+	    self.beepers -= 1
 
 	def kill(self):
+	    print self.name + ' died with ' + str(self.beepers) + ' beepers at ' + str(self.row) + ', ' + str(self.col)
 	    self.alive = False
 	    worldKarel.leaveWorld(self)
 	    worldKarel.dropBeepers(self)
@@ -49,7 +50,7 @@ class Karel(object):
 
 	def setPosition(self, col, row):
 	    self.row = row
-	    self.col =col
+	    self.col = col
 
 	def setFacing(self, facing):
 	    self.facing = facing

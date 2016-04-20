@@ -39,8 +39,9 @@ class program{
                 exit()
                 turnright()
                 pickBeepers()
+                turnleft()
+                move()
+                move()
                 turnoff()
-        }
-}
         }
 }
