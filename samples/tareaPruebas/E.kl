@@ -4,28 +4,87 @@ class program{
                         turnleft()
                 }
         }
-        void son(){
+        void pickBeepers(){
                 while(nextToABeeper){
                         pickbeeper()
+                        if(frontIsBlocked){
+                                if(leftIsClear){
+                                        turnleft()
+                                }
+                                if(rightIsClear){
+                                        turnright()
+                                }
+                        }
+                        move()
                 }
+        }
+        void putBeepers(){
+                while(anyBeepersInBeeperBag){
+                        putbeeper()
+                        if(frontIsBlocked){
+                                if(leftIsClear){
+                                        turnleft()
+                                }
+                                if(rightIsClear){
+                                        turnright()
+                                }
+                        }
+                        move()
+                }
+        }
+        void search(){
+                turnright()
+                while(notNextToABeeper){
+                        if(frontIsClear){
+                                move()
+                                if(rightIsClear){
+                                        turnright()
+                                }
+                        }
+                        else{
+                                turnleft()
+                        }
+                }
+        }
+        void exit(){
+                turnright()
                 move()
+                move()
+                turnleft()
+                while(frontIsClear){
+                        move()
+                }
+        }
+        void son(){
+                while(notNextToABeeper){
+                        move()
+                }
+                pickBeepers()
+                exit()
+                turnright()
+                move()
+                move()
+                iterate(20){
+                        turnright()
+                }
+                putBeepers()
+                turnleft()
                 move()
                 turnoff()
         }
-        program(){ 
-                move()
-                move()
+        program(){
                 clone(son())
+                search()
+                pickBeepers()
+                turnleft()
                 move()
-                turnright()
                 move()
-                if(isSon){
-                        turnleft()
+                turnleft()
+                move()
+                move()
+                iterate(24){
+                        turnright()
                 }
-                move()
-                move()
-                move()
-                move()
                 turnoff()
         }
 }

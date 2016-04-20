@@ -467,7 +467,7 @@ def printWorld():
 		print 
     
 	repaint(world)
-	time.sleep(0.2)
+	time.sleep(0.05)
 
 def finalWorld():
 	'''
