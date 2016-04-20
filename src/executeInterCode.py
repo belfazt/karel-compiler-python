@@ -105,7 +105,7 @@ def executeInterCodeLine(karel,interCodeArray):
             karelFatherAlive = False
 
     if not worldKarel.flagNoErrors:
-        print "Karel died :("
+        print karel.name + " died :("
 
 def conditionals(karel, interCodeArray):
     '''

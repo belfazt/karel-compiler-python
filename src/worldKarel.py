@@ -107,16 +107,16 @@ def turnleft(karel):
 	'''
 	if karel.facing == "left":
 		karel.setFacing("down")
-		print "I'm looking down"
+		print karel.name + ": I'm looking down"
 	elif karel.facing == "right":
 		karel.setFacing("up")
-		print "I'm looking up"
+		print karel.name + ": I'm looking up"
 	elif karel.facing == "up":
 		karel.setFacing("left")
-		print "I'm looking left"
+		print karel.name + ": I'm looking left"
 	else:
 		karel.setFacing("right")
-		print "I'm looking right"
+		print karel.name + ": I'm looking right"
 
 def pickbeeper(karel):
 	'''
@@ -127,7 +127,7 @@ def pickbeeper(karel):
 	if "B" in world[karel.row][karel.col]:
 		world[karel.row][karel.col].remove("B")
 		karel.pickBeeper()
-		print str(karel.name) + ": Picked a beeper"
+		print karel.name + ": Picked a beeper"
 	else:
 		print "Error at picking beeper!"
 		flagNoErrors = False
@@ -467,7 +467,8 @@ def printWorld():
 		print 
     
 	repaint(world)
-	time.sleep(0.2)
+	# We're sleeping just a 100ms because of the synchronization with the GUI
+	time.sleep(0.05)
 
 def finalWorld():
 	'''

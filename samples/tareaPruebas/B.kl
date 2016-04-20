@@ -4,28 +4,70 @@ class program{
                         turnleft()
                 }
         }
-        void son(){
+        void pickBeepers(){
                 while(nextToABeeper){
                         pickbeeper()
+                        if(frontIsBlocked){
+                                if(leftIsClear){
+                                        turnleft()
+                                } else {
+                                        turnright()
+                                }
+                        }
+                        move()
                 }
-                move()
-                move()
-                turnoff()
         }
-        program(){ 
-                move()
-                move()
-                clone(son())
-                move()
+        void searchMoreBeepers(){
                 turnright()
                 move()
-                if(isSon){
+                move()
+                while(notNextToABeeper){
+                        if(leftIsClear){
+                                turnleft()
+                                while(notNextToABeeper){
+                                        move()
+                                }
+                        }
+                }
+        }
+        void exit(){
+                turnright()
+                move()
+                move()
+                turnleft()
+                while(frontIsClear){
+                        
+                        move()
+                        
+                }       
+        }
+        void idle(){
+                iterate(50){
                         turnleft()
                 }
+        }
+        void son(){
+                turnright()
+                searchMoreBeepers()
+                turnright()
+                pickBeepers()
+                turnleft()
                 move()
                 move()
-                move()
-                move()
+                while(amIAlone){
+                        turnleft()
+                }
+                givebeeper(8)
+                turnoff()
+        }
+        program(){
+                while(notNextToABeeper){
+                        move()
+                }
+                clone(son())
+                pickBeepers()
+                exit()
+                idle()
                 turnoff()
         }
 }
