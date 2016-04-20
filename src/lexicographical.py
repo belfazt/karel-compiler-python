@@ -110,7 +110,7 @@ def start(ch):
         This method is the main loop of the progrmas reads character by character
         and classify them in ordet to get the valid tokens an add the to the symbol table
     '''
-    if ch:
+    while ch != '':
         buff = ""
         if isValidChar(ch):
             buff += ch
@@ -120,7 +120,7 @@ def start(ch):
             out.write(buff + '\n')
             insertToken(buff)
             buff = ""
-            start(ch)
+            #start(ch)
         elif ch.isalpha():
 #            print "is alpha:",ch 
             buff += ch
@@ -133,7 +133,7 @@ def start(ch):
             out.write(buff + '\n')
             insertToken(buff)
             buff = ""
-            start(ch)
+            #start(ch)
         elif ch.isdigit():
             buff += ch
             ch=getNext()
@@ -145,27 +145,31 @@ def start(ch):
             out.write(buff + '\n')
             insertToken(buff)
             buff = ""
-            start(ch)
+            #start(ch)
         elif '&' in ch:
             double(ch,buff,'&')
         elif '|' in ch:
             double(ch,buff,'|')
         elif ' ' in ch:
+            pass
             ch=getNext()
-            start(ch)
+            #start(ch)
         elif '\n' in ch:
             addOne()
             ch=getNext()
-            start(ch)
+            #start(ch)
         else:
             if ch:
                 buff += ch
                 insertToken(buff)
-                start(getNext())
+                ch=getNext()
+                #start(getNext())
             elif ch=='':
                 print "EOF!!"
-    else:
-        checkErrors()
-        if(syntaxError):
-            sys.exit()
+        if not ch:
+            ch = ''
+    #else:
+    checkErrors()
+    if(syntaxError):
+        sys.exit()
     return [tokens, lines]

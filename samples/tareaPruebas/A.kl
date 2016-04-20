@@ -4,24 +4,43 @@ class program{
                         turnleft()
                 }
         }
-        void go(){
-                while(notFacingSouth){
-                        turnleft()
-                }
-                while(frontIsClear){
-                        move()
+        void pickBeepers(){
+                while(nextToABeeper){
+                        pickbeeper()
                         if(frontIsBlocked){
-                                if(facingSouth){
+                                if(leftIsClear){
+                                        turnleft()
+                                }
+                                if(rightIsClear){
                                         turnright()
                                 }
-                                if(facingWest){
-                                        turnleft()
+                        }
+                        move()
+                }
+        }
+        void exit(){
+                turnright()
+                move()
+                move()
+                while(notNextToABeeper){
+                        if(leftIsClear){
+                                turnleft()
+                                while(notNextToABeeper){
+                                        move()
                                 }
                         }
                 }
         }
-        program(){ 
-                go()
+        program(){
+                while(notNextToABeeper){
+                        move()
+                }
+                pickBeepers()
+                exit()
+                turnright()
+                pickBeepers()
                 turnoff()
+        }
+}
         }
 }
