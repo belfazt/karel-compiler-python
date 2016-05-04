@@ -31,7 +31,7 @@ class program{
                 }
         }
         void idle(){
-                iterate(300){
+                iterate(10000){
                         turnleft()
                 }
         }
@@ -43,12 +43,10 @@ class program{
                         move()
                         if(amINotAlone){
                                 givebeeper(6)
-                                idle()
-                                turnoff()
                         }
                 }       
         }
-        void son(){
+        void sontwo(){
                 turnright()
                 searchMoreBeepers()
                 turnright()
@@ -56,23 +54,34 @@ class program{
                 turnleft()
                 move()
                 move()
-                while(amIAlone){
-                        turnleft()
-                }
+                turnleft()
+                move()
+                move()
+                move()
+                move()
+                move()
+                turnleft()
+                move()
+                move()
+                move()
+                move()
                 givebeeper(8)
                 turnoff()
         }
-        void sontwo(){
+        void son(){
                 while(notNextToABeeper){
                         move()
                 }
-                clone(son())
+                clone(sontwo())
                 pickBeepers()
                 exit()
+                turnleft()
+                move()
                 idle()
+                turnoff()
         }
         program(){
-                clone(sontwo())
+                clone(son())
                 idle()
                 turnoff()
         }

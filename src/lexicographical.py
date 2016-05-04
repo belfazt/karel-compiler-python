@@ -9,7 +9,7 @@ import os
     Also writes the output (list of tokens) to the per_line.kl file
 '''
 
-inp = open('../samples/tareaPruebas/E.kl','r')
+inp = open('../samples/tareaPruebas/C.kl','r')
 #inp = open('../samples/checkAmINotAlone.kl','r')
 #inp = open('../samples/checkIsDescendant.kl','r')
 #inp = open('../samples/checkIsNotDescendant.kl','r')
